@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../ra-barbearia"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "jc-estetica-sobrancelha"
+	}
+}
