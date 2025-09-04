@@ -1,88 +1,90 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Jeanne Cristine • Estética da Sobrancelha</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet" href="style.css">
-    <title>JC Estética De Sobrancelhas</title>
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-    <div class="bg-home">
-        <header>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container nav">
+            <div class="brand">
+                <div class="brand__selo" aria-hidden="true"></div>
+                <div class="brand__logo" role="img" aria-label="Jeanne Cristine"></div>
+            </div>
 
-            <nav class="header-content container">
-                <div class="header-icons" data-aos="fade-down">
-                    <a href="#">
-                        <i class="fa-brands fa-instagram fa-2x"></i>
-                    </a>
-
-                    <a href="#">
-                        <i class="fa-brands fa-facebook fa-2x"></i>
-                    </a>
-
-                    <a href="#">
-                        <i class="fa-brands fa-tiktok fa-2x"></i>
-                    </a>
-                </div>
-
-            
+            <nav class="nav__links" aria-label="Navegação principal">
+                <a class="nav__link" href="#sobre">Sobre</a>
+                <a class="nav__link" href="#servicos">Serviços</a>
+                <a class="nav__link" href="#profissionais">Profissionais</a>
+                <a class="nav__link" href="#localizacao">Localização</a>
+                <!-- abre modal -->
+                <a class="btn btn--brand" href="#" data-agendar>Agendar</a>
             </nav>
+        </div>
+    </header>
 
-            <main class="hero container" data-aos="fade-up" data-aos-delay="400">
-                <!-- Troca do texto por imagem -->
-                <figure class="hero-banner">
-                    <img src="./assets/img-principal.jpg" alt="Slogan do estúdio : beleza, estilo e arte"
-                        loading="eager" />
-                </figure>
-
-                <p> horário de funcionamento: 09:00 ás 19:00</p>
-
-                <button class="button-contact" id="openModalBtn">
-                    Agendar horário
-                </button>
-            </main>
-
-        </header>
-    </div>
-
-    <section class="about">
-        <div class="container about-content">
-            <div data-aos="zoom-in" data-aos-delay="100">
-                <img src="./assets/img-sobre.jpeg" alt="imagem sobre a Barbearia">
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container hero__wrap">
+            <div class="reveal">
+                <h1 class="hero__title">Sobrancelhas que valorizam o seu olhar.</h1>
+                <p class="hero__text">Design, henna e cílios com técnica e cuidado. Agende em poucos cliques e receba
+                    confirmação pelo WhatsApp.</p>
+                <div style="display:flex; gap:12px; flex-wrap:wrap">
+                    <!-- abre modal -->
+                  
+                    <a class="btn" href="#sobre">Conhecer o estúdio</a>
+                </div>
             </div>
 
-            <div data-aos="zoom-out-left" data-aos-delay="250" class="about-description">
-                <h2>Sobre</h2>
-                <p>No nosso estúdio, cada detalhe é pensado para que suas sobrancelhas valorizem seu olhar com beleza, estilo e
-                personalidade. Trabalhamos com técnicas modernas, materiais de alta qualidade e muito cuidado em cada atendimento. Aqui,
-                você encontra um ambiente aconchegante, atendimento personalizado e um toque artístico em cada design — porque suas
-                sobrancelhas merecem mais do que um retoque, merecem a moldura perfeita para o seu rosto. ✨👁️ </p>
+            <div class="hero__mock reveal" aria-hidden="true">
+                <img src="./assets/img-jc-p.jpg" alt="">
             </div>
-
         </div>
     </section>
 
+    <!-- SOBRE -->
+    <section id="sobre" class="section">
+        <div class="container about">
+            <div class="reveal">
+                <h2 class="section__title">Sobre</h2>
+                <p class="section__lead">Cada detalhe é pensado para que suas sobrancelhas valorizem sua expressão com
+                    naturalidade. Atendimento acolhedor, materiais de qualidade e técnicas atuais.</p>
+                <ul style="margin:0; padding-left:18px; color:var(--muted); line-height:1.7">
+                    <li>Design personalizado ao formato do seu rosto</li>
+                    <li>Henna e técnicas de longa duração</li>
+                    <li>Extensão de cílios com conforto e segurança</li>
+                </ul>
+            </div>
+
+            <div class="about__media reveal">
+                <img src="./assets/img-sobre-jc.png" alt="Ambiente do estúdio">
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
     <section class="services" id="serviços">
         <div class="services-content container">
             <h2>Serviços</h2>
             <p>Na JC Estética, oferecemos serviços completos para cuidar do seu estilo com qualidade e
                 profissionalismo:</p>
         </div>
-
+    
         <section class="haircuts">
-
+    
             <div class="haircut" data-aos="fade-up" data-aos-delay="150">
                 <img src="./assets/serviço1-jc.jpg" alt="Coloração com Henna">
                 <div class="haircut-info">
@@ -92,7 +94,7 @@
                     </a>
                 </div>
             </div>
-
+    
             <div class="haircut" data-aos="fade-up" data-aos-delay="250">
                 <img src="./assets/serviço2-jc.jpg" alt="Designer de Sobrancelha">
                 <div class="haircut-info">
@@ -102,7 +104,7 @@
                     </a>
                 </div>
             </div>
-
+    
             <div class="haircut" data-aos="fade-up" data-aos-delay="400">
                 <img src="./assets/serviço3-jc.jpg" alt="Cílios">
                 <div class="haircut-info">
@@ -112,7 +114,7 @@
                     </a>
                 </div>
             </div>
-
+    
             <div class="haircut" data-aos="fade-up" data-aos-delay="400">
                 <img src="./assets/serviço4-jc.jpg" alt="Depilação de buço a linha">
                 <div class="haircut-info">
@@ -122,106 +124,127 @@
                     </a>
                 </div>
             </div>
-
-       
+    
+    
         </section>
     </section>
 
-    <section class="testimonials" id="testimonials">
+    <!-- PROFISSIONAIS -->
+    <section id="profissionais" class="section" style="border-top:1px solid var(--line)">
         <div class="container">
-            <h2 class="section-title">O Que Nossas Clientes Dizem</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"Simplesmente incrível! A equipe é super atenciosa e o resultado das
-                        minhas
-                        unhas ficou perfeita. Recomendo de olhos fechados!"</p>
-                    <p class="testimonial-author">- Maria Silva</p>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"Ambiente acolhedor e profissionais extremamente capacitados. Sempre
-                        saio de lá me sentindo renovada e linda!"</p>
-                    <p class="testimonial-author">- Ana Santos</p>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"O melhor salão da região! Preços justos e qualidade excepcional. Sou
-                        cliente fiel há mais de 3 anos."</p>
-                    <p class="testimonial-author">- Juliana Costa</p>
-                </div>
+            <h2 class="section__title">Profissionais</h2>
+            <p class="section__lead">Equipe preparada para entregar técnica, conforto e resultado.</p>
+
+            <div class="people">
+                <!-- CARD 1 -->
+                <article class="pro reveal">
+                    <div class="pro__photo" style="background:url('./assets/jeane.jpg') center/cover no-repeat"></div>
+                    <div class="pro__info">
+                        <h3 class="pro__name">Jeanne</h3>
+                        <p class="pro__role">Designer de Sobrancelhas</p>
+                        <!-- abre modal com profissional preenchido -->
+                        <a class="pro__btn pro__btn--whatsapp" href="#" data-agendar data-prof="Jeanne">Agendar</a>
+                    </div>
+                </article>
+
+                <!-- DUPLIQUE PARA OUTROS PROFISSIONAIS SE QUISER
+        <article class="pro reveal">
+          <div class="pro__photo" style="background:url('./assets/prof-equipe1.jpg') center/cover no-repeat"></div>
+          <div class="pro__info">
+            <h3 class="pro__name">Equipe</h3>
+            <p class="pro__role">Coloração & Cílios</p>
+            <a class="pro__btn pro__btn--whatsapp" href="#" data-agendar data-prof="Equipe">Agendar</a>
+          </div>
+        </article>
+        -->
             </div>
         </div>
     </section>
 
-    <div class="services">
-        <h2>Venha nos Conhecer</h2>
-    </div>
+    <!-- LOCALIZAÇÃO -->
+    <section id="localizacao" class="section" style="border-top:1px solid var(--line)">
+        <div class="container">
+            <h2 class="section__title">Localização</h2>
+            <p class="section__lead">Conjunto habitacional da Torre — Recife/PE</p>
 
-    <iframe width="100%"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.5469860211556!2d-34.915291026190054!3d-8.045550580353531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1902b55d4a1b%3A0x62f009f8fa918156!2sConjunto%20habitacional%20da%20Torre!5e0!3m2!1spt-BR!2sbr!4v1751511167281!5m2!1spt-BR!2sbr"
-        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="map reveal">
+                <iframe title="Mapa"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.5469860211556!2d-34.915291026190054!3d-8.045550580353531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab1902b55d4a1b%3A0x62f009f8fa918156!2sConjunto%20habitacional%20da%20Torre!5e0!3m2!1spt-BR!2sbr!4v1751511167281!5m2!1spt-BR!2sbr"
+                    width="100%" height="100%" style="border:0" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
 
-    <footer class="footer">
-        <div class="footer-icons">
-
-            <a href="#">
-                <i class="fa-brands fa-instagram fa-2x"></i>
-            </a>
-
-            <a href="#">
-                <i class="fa-brands fa-facebook fa-2x"></i>
-            </a>
-
-            <a href="#">
-                <i class="fa-brands fa-tiktok fa-2x"></i>
-            </a>
-
+     
         </div>
+    </section>
 
-        <div>
-            <img src="./assets/logo-jc.png" alt="logo barbearia" class="header-logo">
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container foot">
+            <div class="foot__brand">
+                <div class="foot__selo" aria-hidden="true"></div>
+                <span>© Jeanne Cristine • Estética da Sobrancelha</span>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <a class="btn" href="https://instagram.com" target="_blank" rel="noopener"
+                    aria-label="Instagram">Instagram</a>
+                <a class="btn" href="https://facebook.com" target="_blank" rel="noopener"
+                    aria-label="Facebook">Facebook</a>
+                <a class="btn" href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">TikTok</a>
+            </div>
         </div>
-
-        <p>Copyright | <data>JC Estética - Todos Direitos Reservados. </data></p>
     </footer>
 
-    <a href="https://wa.me/5581996221060?text=Olá! Gostaria de agendar um horário." class="btn-whatsapp" target="_blank"
-        id="openModalBtn" data-aos="zoom-in-uo" data-aos-delay="400">
-        <img src="./assets/whatssapp.svg" alt="botão whatssapp">
-        <span class="tooltip-text">Tire suas Dúvidas</span>
-    </a>
+    <!-- MODAL DE AGENDAMENTO -->
+    <div id="modal-agendar" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+        aria-hidden="true">
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <h3 id="modal-title" class="modal__title">Agendar horário</h3>
+                <button class="modal__close" type="button" data-close aria-label="Fechar">×</button>
+            </div>
 
-    <!-- Modal de Agendamento -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Escolha seu horário</h2>
+            <div class="modal__body">
+                <div class="modal__row">
+                    <div>
+                        <label for="ag-data">Data</label>
+                        <input type="date" id="ag-data" />
+                    </div>
+                    <div>
+                        <label for="ag-hora">Horário</label>
+                        <select id="ag-hora">
+                            <option value="">Selecione um horário</option>
+                        </select>
+                    </div>
+                </div>
 
-            <label for="data">Data:</label>
-            <input type="date" id="data" required>
+                <div class="modal__row">
+                    <div>
+                        <label for="ag-servico">Serviço (opcional)</label>
+                        <select id="ag-servico">
+                            <option value="">Selecionar...</option>
+                            <option>Designer de Sobrancelha</option>
+                            <option>Coloração com Henna</option>
+                            <option>Extensão de Cílios</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ag-prof">Profissional (opcional)</label>
+                        <input type="text" id="ag-prof" placeholder="Jeanne / Equipe" />
+                    </div>
+                </div>
+            </div>
 
-            <label for="hora">Hora:</label>
-            <select id="hora">
-                <option value="">Selecione um horário</option>
-                <option>09:00</option>
-                <option>10:00</option>
-                <option>11:00</option>
-                <option>13:00</option>
-                <option>14:00</option>
-                <option>15:00</option>
-                <option>16:00</option>
-                <option>17:00</option>
-                <option>18:00</option>
-                <option>19:00</option>
-            </select>
-
-            <button id="confirmarBtn">Agendar via WhatsApp</button>
+            <div class="modal__actions">
+                <button class="btn--light" type="button" data-close>Cancelar</button>
+                <button class="btn--confirm" type="button" id="ag-confirmar">Confirmar no WhatsApp</button>
+            </div>
         </div>
     </div>
 
-    <script type="module" src="./script.js"></script>
+    <!-- Seu JS -->
+    <script src="script.js" defer></script>
 </body>
 
 </html>
+
