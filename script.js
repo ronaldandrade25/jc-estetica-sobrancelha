@@ -12,7 +12,7 @@ import {
     getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// 🔐 COLE AQUI o mesmo firebaseConfig do seu projeto
+// 🔐 Mesmo projeto do painel
 const firebaseConfig = {
     apiKey: "AIzaSyC-tF920g3mumZ8SZyGN1gTzUJoTSddCX0",
     authDomain: "jc-estetica-sobrancelhas.firebaseapp.com",
@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // =========================
-// Toast simples (fallback com alert)
+// Toast simples
 // =========================
 function toast(msg, type = "ok", ms = 2600) {
     const t = document.getElementById("toast");
@@ -51,9 +51,7 @@ function toast(msg, type = "ok", ms = 2600) {
 })();
 
 // =========================
-// Modal de agendamento (mantido)
-// + Bloqueio de horários ocupados
-// + Correção do botão WhatsApp (redirect na mesma aba)
+// Modal de agendamento
 // =========================
 (function () {
     const modal = document.getElementById('modal-agendar');
@@ -61,15 +59,14 @@ function toast(msg, type = "ok", ms = 2600) {
     const closers = modal.querySelectorAll('[data-close]');
     const dataEl = document.getElementById('ag-data');
     const horaEl = document.getElementById('ag-hora');
+    const nomeEl = document.getElementById('ag-nome');      // NOVO
     const servicoEl = document.getElementById('ag-servico');
     const profEl = document.getElementById('ag-prof');
     const btnConfirma = document.getElementById('ag-confirmar');
 
     // Horários fixos 09:00–19:00 (em horas cheias)
     const HORARIOS_FIXOS = [];
-    for (let h = 9; h <= 19; h++) {
-        HORARIOS_FIXOS.push(String(h).padStart(2, '0') + ':00');
-    }
+    for (let h = 9; h <= 19; h++) HORARIOS_FIXOS.push(String(h).padStart(2, '0') + ':00');
 
     function resetHorariosPlaceholder(text = 'Selecione uma data primeiro') {
         horaEl.innerHTML = `<option value="">${text}</option>`;
@@ -90,21 +87,21 @@ function toast(msg, type = "ok", ms = 2600) {
         horaEl.innerHTML = '<option value="">Carregando...</option>';
 
         try {
-            const q = query(
-                collection(db, "agendamentos"),
-                where("dataISO", "==", dataISO)
-            );
+            const q = query(collection(db, "agendamentos"), where("dataISO", "==", dataISO));
             const snap = await getDocs(q);
-            const ocupados = new Set(snap.docs.map(d => (d.data().hora || '').trim()));
+
+            // considera ocupados tanto agendamentos quanto bloqueios
+            const ocupados = new Set();
+            snap.forEach(d => {
+                const v = d.data();
+                const h = (v.hora || '').trim();
+                if (h) ocupados.add(h);
+            });
 
             const livres = HORARIOS_FIXOS.filter(h => !ocupados.has(h));
-            if (livres.length === 0) {
-                resetHorariosPlaceholder('Nenhum horário disponível');
-                return;
-            }
+            if (!livres.length) { resetHorariosPlaceholder('Nenhum horário disponível'); return; }
 
-            horaEl.innerHTML =
-                '<option value="">Selecione um horário</option>' +
+            horaEl.innerHTML = '<option value="">Selecione um horário</option>' +
                 livres.map(h => `<option>${h}</option>`).join('');
         } catch (err) {
             console.error('[Horários] Erro ao consultar Firestore:', err);
@@ -144,39 +141,41 @@ function toast(msg, type = "ok", ms = 2600) {
 
     // Ao mudar a data → recarrega horários
     dataEl.addEventListener('change', (e) => {
-        const dataISO = e.target.value;
-        populaHorariosLivres(dataISO);
+        populaHorariosLivres(e.target.value);
     });
 
-    // Confirmar → checa / salva → REDIRECIONA WhatsApp (mesma aba)
+    // Confirmar → checa / salva → WhatsApp
     btnConfirma.addEventListener('click', async () => {
         const dataISO = dataEl.value;
         const hora = horaEl.value;
+        const nome = (nomeEl.value || '').trim();        // NOVO
 
-        if (!dataISO || !hora) {
-            [dataEl, horaEl].forEach(el => {
+        // validações
+        const invalidados = [];
+        if (!dataISO) invalidados.push(dataEl);
+        if (!hora) invalidados.push(horaEl);
+        if (!nome) invalidados.push(nomeEl);
+
+        if (invalidados.length) {
+            invalidados.forEach(el => {
                 el.style.boxShadow = '0 0 0 2px #ff6464';
                 setTimeout(() => el.style.boxShadow = 'none', 700);
             });
-            toast("Preencha data e horário.", "err");
+            toast("Preencha data, horário e seu nome.", "err");
             return;
         }
 
         const servico = servicoEl.value || '—';
         const prof = profEl.value || '—';
 
-        // Formata data pt-BR
         const dt = new Date(dataISO + 'T00:00:00');
-        const dataFormatada = dt.toLocaleDateString('pt-BR', {
-            weekday: 'short', day: '2-digit', month: '2-digit'
-        });
+        const dataFormatada = dt.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' });
 
-        // Desabilita botão para evitar clique duplo
         btnConfirma.disabled = true;
         btnConfirma.textContent = 'Enviando...';
 
         try {
-            // Checagem extra de disponibilidade
+            // Checagem de conflito (considera bloqueios também)
             const q = query(
                 collection(db, "agendamentos"),
                 where("dataISO", "==", dataISO),
@@ -189,39 +188,39 @@ function toast(msg, type = "ok", ms = 2600) {
                 return;
             }
 
-            // Salvar no Firestore
-            const docRef = await addDoc(collection(db, "agendamentos"), {
+            // Salvar no Firestore (padroniza em cliente e clienteNome)
+            await addDoc(collection(db, "agendamentos"), {
                 dataISO,
                 hora,
                 servico,
                 profissional: prof,
+                cliente: nome,                 // NOVO
+                clienteNome: nome,             // NOVO
                 status: "pendente",
                 source: "site",
                 createdAt: serverTimestamp(),
             });
 
-            // Monta mensagem WhatsApp (SEM ID)
+            // Mensagem WhatsApp
             const msg =
                 `Olá! Gostaria de confirmar meu agendamento:%0A%0A` +
+                `• Nome: ${encodeURIComponent(nome)}%0A` +                    // NOVO
                 `• Serviço: ${encodeURIComponent(servico)}%0A` +
                 `• Profissional: ${encodeURIComponent(prof)}%0A` +
                 `• Data: ${encodeURIComponent(dataFormatada)}%0A` +
                 `• Horário: ${encodeURIComponent(hora)}`;
 
-            // IMPORTANTE: redireciona na MESMA aba (evita bloqueio de popup)
             const url = `https://wa.me/5581996221060?text=${msg}`;
             toast("Agendamento registrado. Abrindo WhatsApp...", "ok", 1500);
 
-            // pequeno delay só para o usuário ver o toast (opcional)
             setTimeout(() => {
-                window.location.assign(url); // <-- sem popup, sem bloqueio
+                window.location.assign(url);
                 fecharModal();
             }, 600);
         } catch (err) {
             console.error(err);
             toast("Não foi possível salvar o agendamento. Tente novamente.", "err");
         } finally {
-            // Reabilita o botão se ainda estiver na página/modal
             btnConfirma.disabled = false;
             btnConfirma.textContent = 'Confirmar no WhatsApp';
         }
@@ -230,4 +229,3 @@ function toast(msg, type = "ok", ms = 2600) {
     // Init
     setMinHoje();
 })();
-
