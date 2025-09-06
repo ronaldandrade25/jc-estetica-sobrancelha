@@ -210,7 +210,7 @@ function toast(msg, type = "ok", ms = 2600) {
                 `• Data: ${encodeURIComponent(dataFormatada)}%0A` +
                 `• Horário: ${encodeURIComponent(hora)}`;
 
-            const url = `https://wa.me/5581996221060?text=${msg}`;
+            const url = `https://wa.me/5581987285168?text=${msg}`;
             toast("Agendamento registrado. Abrindo WhatsApp...", "ok", 1500);
 
             setTimeout(() => {
