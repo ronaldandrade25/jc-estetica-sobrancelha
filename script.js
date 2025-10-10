@@ -59,14 +59,14 @@ function toast(msg, type = "ok", ms = 2600) {
     const closers = modal.querySelectorAll('[data-close]');
     const dataEl = document.getElementById('ag-data');
     const horaEl = document.getElementById('ag-hora');
-    const nomeEl = document.getElementById('ag-nome');      // NOVO
+    const nomeEl = document.getElementById('ag-nome');
     const servicoEl = document.getElementById('ag-servico');
     const profEl = document.getElementById('ag-prof');
     const btnConfirma = document.getElementById('ag-confirmar');
 
-    // Horários fixos 09:00–19:00 (em horas cheias)
+    // Horários fixos 08:00–22:00 (de 1 em 1 hora)
     const HORARIOS_FIXOS = [];
-    for (let h = 9; h <= 19; h++) HORARIOS_FIXOS.push(String(h).padStart(2, '0') + ':00');
+    for (let h = 8; h <= 22; h++) HORARIOS_FIXOS.push(String(h).padStart(2, '0') + ':00');
 
     function resetHorariosPlaceholder(text = 'Selecione uma data primeiro') {
         horaEl.innerHTML = `<option value="">${text}</option>`;
@@ -101,7 +101,8 @@ function toast(msg, type = "ok", ms = 2600) {
             const livres = HORARIOS_FIXOS.filter(h => !ocupados.has(h));
             if (!livres.length) { resetHorariosPlaceholder('Nenhum horário disponível'); return; }
 
-            horaEl.innerHTML = '<option value="">Selecione um horário</option>' +
+            horaEl.innerHTML =
+                '<option value="">Selecione um horário</option>' +
                 livres.map(h => `<option>${h}</option>`).join('');
         } catch (err) {
             console.error('[Horários] Erro ao consultar Firestore:', err);
@@ -148,7 +149,7 @@ function toast(msg, type = "ok", ms = 2600) {
     btnConfirma.addEventListener('click', async () => {
         const dataISO = dataEl.value;
         const hora = horaEl.value;
-        const nome = (nomeEl.value || '').trim();        // NOVO
+        const nome = (nomeEl.value || '').trim();
 
         // validações
         const invalidados = [];
@@ -188,14 +189,14 @@ function toast(msg, type = "ok", ms = 2600) {
                 return;
             }
 
-            // Salvar no Firestore (padroniza em cliente e clienteNome)
+            // Salvar no Firestore
             await addDoc(collection(db, "agendamentos"), {
                 dataISO,
-                hora,
+                hora,                  // exemplo: "08:00" ... "22:00"
                 servico,
                 profissional: prof,
-                cliente: nome,                 // NOVO
-                clienteNome: nome,             // NOVO
+                cliente: nome,
+                clienteNome: nome,
                 status: "pendente",
                 source: "site",
                 createdAt: serverTimestamp(),
@@ -204,7 +205,7 @@ function toast(msg, type = "ok", ms = 2600) {
             // Mensagem WhatsApp
             const msg =
                 `Olá! Gostaria de confirmar meu agendamento:%0A%0A` +
-                `• Nome: ${encodeURIComponent(nome)}%0A` +                    // NOVO
+                `• Nome: ${encodeURIComponent(nome)}%0A` +
                 `• Serviço: ${encodeURIComponent(servico)}%0A` +
                 `• Profissional: ${encodeURIComponent(prof)}%0A` +
                 `• Data: ${encodeURIComponent(dataFormatada)}%0A` +
